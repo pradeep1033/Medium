@@ -1,0 +1,27 @@
+---
+- name: Extend Windows D and E Drives
+  hosts: your_windows_host
+  gather_facts: false
+  tasks:
+    - name: Get disk information
+      win_disk_info:
+        drive_type: RAW
+      register: disk_info
+
+    - name: Extend partitions
+      win_partition:
+        disk_number: "{{ item.disk_number }}"
+        partition_number: "{{ item.partition_number }}"
+        size: "{{ item.size }}"
+      loop: "{{ disk_info.disk_info }}"
+      when: item.file_system == "NTFS"
+
+    - name: Extend NTFS file systems
+      win_shell: |
+        $driveLetter = "{{ item.drive_letter }}"
+        $fsType = (Get-Partition -DriveLetter $driveLetter).FileSystem
+        if ($fsType -eq "NTFS") {
+          Resize-Partition -DriveLetter $driveLetter -Size ($null)
+        }
+      loop: "{{ disk_info.disk_info }}"
+      when: item.file_system == "NTFS"
