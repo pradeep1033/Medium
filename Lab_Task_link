@@ -3,3 +3,16 @@ Git Hub link for AWS Lab on ALB-Lambda-Target-WhatisMyIP - https://github.com/aw
 AWS LAB for ALB-Lambda-Target-WhatisMyIP -  https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:072567720793:applications~ALB-Lambda-Target-WhatisMyIP
 
 ===================================================================
+
+
+API Clients:
+Invoke STS to AssumeRole to retrieve temporary credentials
+Retrieve Credentials from Assume Role
+Invoke API using credentials
+
+AWS Gateway:
+Initiate Authentication & Authorization Flow
+ Validate the credentials with IAM
+Successful Authentication, Continue Flow
+Allowed, invoke the back-end AWS service for this request.
+Return result to Client
